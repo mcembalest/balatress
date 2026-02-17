@@ -1,0 +1,145 @@
+/* Card component */
+.card {
+  position: relative;
+  width: 160px;
+  background: linear-gradient(155deg, #1a2340, #0f1928);
+  border: 2px solid var(--rarity-common);
+  border-radius: 8px;
+  padding: 10px;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  user-select: none;
+}
+
+.card:hover {
+  box-shadow: 0 0 20px rgba(var(--glow-r, 150), var(--glow-g, 150), var(--glow-b, 255), 0.3);
+  z-index: 10;
+}
+
+.card-compact {
+  width: 120px;
+  padding: 6px;
+}
+
+.card-compact .card-description {
+  font-size: 0.6rem;
+  -webkit-line-clamp: 2;
+}
+
+.card-compact .card-flavor {
+  display: none;
+}
+
+/* Rarity border glow */
+.card-common { border-color: var(--rarity-common); --glow-r: 154; --glow-g: 164; --glow-b: 175; }
+.card-uncommon { border-color: var(--rarity-uncommon); --glow-r: 0; --glow-g: 156; --glow-b: 253; }
+.card-rare { border-color: var(--rarity-rare); --glow-r: 179; --glow-g: 98; --glow-b: 255; }
+.card-legendary {
+  border-color: var(--rarity-legendary);
+  --glow-r: 242; --glow-g: 201; --glow-b: 76;
+  animation: legendaryPulse 2s ease-in-out infinite;
+}
+
+@keyframes legendaryPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(242, 201, 76, 0.2); }
+  50%      { box-shadow: 0 0 20px rgba(242, 201, 76, 0.5), 0 0 40px rgba(242, 201, 76, 0.1); }
+}
+
+.card-disabled {
+  opacity: 0.4;
+  cursor: not-allowed !important;
+  filter: grayscale(0.5);
+}
+
+.card-disabled:hover {
+  transform: none !important;
+  box-shadow: none;
+}
+
+/* Card internals */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.card-category {
+  font-size: 0.5rem;
+  font-family: "Press Start 2P", monospace;
+  letter-spacing: 1px;
+}
+
+.card-cost {
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.55rem;
+  color: var(--bal-gold);
+  text-shadow: 0 0 4px rgba(242, 201, 76, 0.3);
+}
+
+.card-name {
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.6rem;
+  color: var(--text);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.card-description {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-bottom: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-flavor {
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.3);
+  font-style: italic;
+  margin-bottom: 6px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-rarity {
+  font-size: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.card-piece {
+  font-size: 0.55rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+/* Holographic sheen overlay */
+.card-sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  pointer-events: none;
+  transition: background 0.1s ease;
+}
+
+/* Wobble entrance animation */
+@keyframes cardWobble {
+  0%   { transform: translateX(80px) rotate(8deg); opacity: 0; }
+  60%  { transform: translateX(-5px) rotate(-2deg); opacity: 1; }
+  80%  { transform: translateX(2px) rotate(0.5deg); }
+  100% { transform: translateX(0) rotate(0deg); opacity: 1; }
+}
+
+.card-deal {
+  animation: cardWobble 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}

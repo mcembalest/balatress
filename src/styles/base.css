@@ -1,0 +1,451 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  /* Balatro palette */
+  --bal-red: #fd5f55;
+  --bal-orange: #fda200;
+  --bal-blue: #009cfd;
+  --bal-green: #379639;
+  --bal-gold: #f2c94c;
+  --bal-purple: #b362ff;
+
+  /* Backgrounds */
+  --bal-dark: #1a1a2e;
+  --bal-darker: #0f0f23;
+  --bal-panel: #16213e;
+  --bal-panel-border: #27364a;
+
+  /* Text */
+  --text: #f0f0f0;
+  --text-muted: #8892a0;
+
+  /* Scoring colors */
+  --chips-color: #4fc3f7;
+  --mult-color: #fd5f55;
+  --score-color: #f2c94c;
+
+  /* Rarity colors */
+  --rarity-common: #9aa4af;
+  --rarity-uncommon: #009cfd;
+  --rarity-rare: #b362ff;
+  --rarity-legendary: #f2c94c;
+
+  /* CRT */
+  --crt-intensity: 0.4;
+
+  /* Layout */
+  --board-size: min(72vh, 72vw, 680px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bal-darker);
+  color: var(--text);
+  font-family: "Courier New", "Lucida Console", monospace;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, .score-popup, .boss-splash-name, .shop-gold-value,
+.chips-value, .mult-value, .score-value {
+  font-family: "Press Start 2P", "Courier New", monospace;
+}
+
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 300px 1fr 280px;
+  grid-template-rows: 1fr auto;
+  gap: 12px;
+  padding: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.hud,
+.panel {
+  background: linear-gradient(145deg, var(--bal-panel), var(--bal-dark));
+  border: 1px solid var(--bal-panel-border);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.hud {
+  grid-row: 1;
+  overflow-y: auto;
+}
+
+.hud h1 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: var(--bal-gold);
+  text-shadow: 0 0 8px rgba(242, 201, 76, 0.4);
+  letter-spacing: 2px;
+}
+
+.panel h2 {
+  margin: 0 0 8px;
+  font-size: 0.7rem;
+  color: var(--bal-gold);
+  letter-spacing: 1px;
+}
+
+#status {
+  font-weight: 700;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+}
+
+#objective,
+#roundInfo {
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+#controlsHint {
+  font-size: 0.75rem;
+  color: var(--bal-blue);
+  margin-bottom: 8px;
+}
+
+/* Gold and Score displays */
+.gold-display {
+  font-size: 0.85rem;
+  color: var(--bal-gold);
+  margin-bottom: 6px;
+  text-shadow: 0 0 6px rgba(242, 201, 76, 0.3);
+}
+
+.score-display {
+  font-size: 0.65rem;
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.chips-value {
+  color: var(--chips-color);
+  font-size: 0.7rem;
+}
+
+.mult-value {
+  color: var(--mult-color);
+  font-size: 0.7rem;
+}
+
+.mult-sign {
+  color: var(--text-muted);
+}
+
+.score-value {
+  color: var(--score-color);
+  font-size: 0.75rem;
+}
+
+/* Board */
+.boardHost {
+  background: linear-gradient(135deg, #0d1427, #111b33);
+  border: 2px solid var(--bal-panel-border);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.chessground {
+  width: var(--board-size);
+  height: var(--board-size);
+}
+
+/* Tarot hand below board */
+.tarot-hand {
+  grid-column: 2;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  padding: 4px 0;
+}
+
+/* Jokers sidebar */
+.jokers-sidebar {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 8px;
+}
+
+.jokers-sidebar .card-compact {
+  margin-bottom: 4px;
+}
+
+.no-jokers {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-style: italic;
+}
+
+/* Log */
+.log {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.log .entry {
+  margin-bottom: 4px;
+  padding-left: 8px;
+  border-left: 2px solid transparent;
+}
+
+.log .entry:first-child {
+  border-left-color: var(--bal-blue);
+  color: var(--text);
+}
+
+/* Out of bounds */
+cg-board square.outBounds {
+  background: rgba(10, 15, 30, 0.9) !important;
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: grid;
+  place-items: center;
+  z-index: 9999;
+  pointer-events: auto;
+  backdrop-filter: blur(4px);
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.overlayCard {
+  width: min(800px, 96vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: linear-gradient(145deg, var(--bal-panel), var(--bal-dark));
+  border: 2px solid var(--bal-panel-border);
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+  z-index: 10000;
+}
+
+.overlayCard h2 {
+  font-size: 0.9rem;
+  margin: 0 0 8px;
+}
+
+/* Shop */
+.shop-score {
+  font-size: 0.7rem;
+  margin-bottom: 12px;
+}
+
+.shop-gold-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 8px;
+  background: rgba(242, 201, 76, 0.08);
+  border: 1px solid rgba(242, 201, 76, 0.2);
+  border-radius: 8px;
+}
+
+.shop-gold-label {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.shop-gold-value {
+  color: var(--bal-gold);
+  font-size: 0.85rem;
+  text-shadow: 0 0 6px rgba(242, 201, 76, 0.3);
+}
+
+.shop-cards-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.shop-actions-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.shop-btn {
+  background: linear-gradient(145deg, #1f2940, #16213e);
+  border: 1px solid var(--bal-panel-border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.6rem;
+  transition: all 0.15s ease;
+}
+
+.shop-btn:hover {
+  border-color: var(--bal-gold);
+  box-shadow: 0 0 12px rgba(242, 201, 76, 0.2);
+  transform: translateY(-1px);
+}
+
+.shop-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.next-btn {
+  border-color: var(--bal-green);
+  background: linear-gradient(145deg, #1a3020, #162e1a);
+}
+
+.next-btn:hover {
+  border-color: var(--bal-green);
+  box-shadow: 0 0 12px rgba(55, 150, 57, 0.3);
+}
+
+.reroll-btn {
+  border-color: var(--bal-blue);
+}
+
+.shop-owned-section {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--bal-panel-border);
+}
+
+.shop-section-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.shop-owned-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Restart stats */
+.restart-stats {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  line-height: 1.8;
+}
+
+/* Score popup */
+.score-popup {
+  position: absolute;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.6rem;
+  pointer-events: none;
+  z-index: 100;
+  text-shadow: 0 0 8px currentColor, 0 2px 4px rgba(0,0,0,0.5);
+  white-space: nowrap;
+}
+
+/* Particles */
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* Boss splash */
+.boss-splash {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 20000;
+  background: rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+}
+
+.boss-splash-inner {
+  text-align: center;
+}
+
+.boss-splash-label {
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.7rem;
+  color: var(--bal-red);
+  letter-spacing: 6px;
+  margin-bottom: 8px;
+  text-shadow: 0 0 15px rgba(253, 95, 85, 0.6);
+}
+
+.boss-splash-name {
+  font-size: 1.5rem;
+  color: var(--bal-gold);
+  margin-bottom: 12px;
+  text-shadow: 0 0 20px rgba(242, 201, 76, 0.5);
+}
+
+.boss-splash-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  max-width: 400px;
+}
+
+/* Tarot slots */
+.tarot-slot {
+  width: 100px;
+  min-height: 60px;
+}
+
+.tarot-empty {
+  width: 100%;
+  height: 60px;
+  border: 1px dashed var(--bal-panel-border);
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  font-size: 0.65rem;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+  }
+
+  .tarot-hand {
+    grid-column: 1;
+  }
+
+  .chessground {
+    width: min(84vw, 68vh);
+    height: min(84vw, 68vh);
+  }
+
+  .log {
+    max-height: 200px;
+  }
+}

@@ -1,0 +1,46 @@
+/* CRT scanline + vignette overlay */
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: none;
+
+  /* Scanlines */
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, var(--crt-intensity, 0.4)) 2px,
+      rgba(0, 0, 0, var(--crt-intensity, 0.4)) 3px
+    );
+
+  /* Vignette */
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 60%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 60%, transparent 100%);
+
+  opacity: 0.15;
+  mix-blend-mode: multiply;
+}
+
+/* Vignette as a separate pseudo-element for better layering */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 50%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}
+
+/* Subtle chromatic aberration on key UI elements */
+.hud h1 {
+  text-shadow:
+    -1px 0 rgba(253, 95, 85, 0.3),
+    1px 0 rgba(0, 156, 253, 0.3),
+    0 0 8px rgba(242, 201, 76, 0.4);
+}

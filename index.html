@@ -5,18 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Balatress</title>
     <link rel="stylesheet" href="./chessground/assets/chessground.base.css" />
-    <link rel="stylesheet" href="./chessground/assets/chessground.brown.css" />
     <link rel="stylesheet" href="./chessground/assets/chessground.cburnett.css" />
-    <link rel="stylesheet" href="./src/styles.css" />
   </head>
   <body>
     <main class="app">
       <section class="hud">
         <h1>Balatress</h1>
+        <div id="goldDisplay" class="gold-display">0g</div>
+        <div id="scoreDisplay" class="score-display"></div>
         <div id="status"></div>
         <div id="objective"></div>
         <div id="roundInfo"></div>
         <div id="controlsHint">Click or drag a piece to a highlighted destination.</div>
+
+        <div class="jokers-sidebar">
+          <h2>Jokers</h2>
+          <div id="jokersList"></div>
+        </div>
       </section>
 
       <section id="boardHost" class="boardHost" aria-label="Game board">
@@ -27,6 +32,8 @@
         <h2>Run Log</h2>
         <div id="log" class="log"></div>
       </section>
+
+      <div class="tarot-hand" id="tarotHand"></div>
     </main>
 
     <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true">

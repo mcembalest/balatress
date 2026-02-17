@@ -1,0 +1,303 @@
+/* Developer Card Browser — clean, information-dense */
+
+:root {
+  --dev-bg: #1a1a2e;
+  --dev-panel: #222244;
+  --dev-border: #333366;
+  --dev-text: #e8e8f0;
+  --dev-muted: #888899;
+}
+
+* { box-sizing: border-box; }
+
+body.dev-ui {
+  margin: 0;
+  background: var(--dev-bg);
+  color: var(--dev-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+
+body.dev-ui::before,
+body.dev-ui::after {
+  display: none !important;
+}
+
+.dev-app {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.dev-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--dev-border);
+}
+
+.dev-header h1 {
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.dev-header h1 span {
+  color: var(--dev-muted);
+  font-weight: normal;
+  font-size: 0.85rem;
+}
+
+/* Stats dashboard */
+.dev-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.dev-stat {
+  background: var(--dev-panel);
+  border: 1px solid var(--dev-border);
+  border-radius: 6px;
+  padding: 8px 14px;
+  text-align: center;
+}
+
+.dev-stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.dev-stat-label {
+  font-size: 0.7rem;
+  color: var(--dev-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Filter bar */
+.dev-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: var(--dev-panel);
+  border: 1px solid var(--dev-border);
+  border-radius: 8px;
+}
+
+.dev-filter-group {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.dev-filter-group label {
+  font-size: 0.75rem;
+  color: var(--dev-muted);
+  margin-right: 4px;
+}
+
+.dev-filter-btn {
+  background: transparent;
+  border: 1px solid var(--dev-border);
+  color: var(--dev-text);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.dev-filter-btn:hover {
+  border-color: #6666aa;
+}
+
+.dev-filter-btn.active {
+  background: #3344aa;
+  border-color: #5566cc;
+}
+
+.dev-search {
+  background: var(--dev-bg);
+  border: 1px solid var(--dev-border);
+  color: var(--dev-text);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  width: 200px;
+}
+
+.dev-search:focus {
+  outline: none;
+  border-color: #5566cc;
+}
+
+/* Card grid */
+.dev-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+}
+
+.dev-card {
+  background: var(--dev-panel);
+  border: 1px solid var(--dev-border);
+  border-radius: 6px;
+  padding: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  position: relative;
+}
+
+.dev-card:hover {
+  border-color: #6666aa;
+}
+
+.dev-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+
+.dev-card-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.dev-card-badges {
+  display: flex;
+  gap: 4px;
+}
+
+.dev-badge {
+  font-size: 0.6rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dev-badge-implemented { background: #1a4a1a; color: #4caf50; }
+.dev-badge-designed { background: #4a4a1a; color: #ffeb3b; }
+.dev-badge-concept { background: #3a3a3a; color: #999; }
+.dev-badge-cut { background: #4a1a1a; color: #f44336; text-decoration: line-through; }
+
+.dev-badge-joker { background: rgba(0, 156, 253, 0.15); color: #009cfd; }
+.dev-badge-tarot { background: rgba(253, 95, 85, 0.15); color: #fd5f55; }
+.dev-badge-planet { background: rgba(55, 150, 57, 0.15); color: #379639; }
+.dev-badge-voucher { background: rgba(242, 201, 76, 0.15); color: #f2c94c; }
+
+.dev-card-desc {
+  font-size: 0.8rem;
+  color: var(--dev-muted);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.dev-card-meta {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 0.7rem;
+  color: var(--dev-muted);
+}
+
+.dev-card-meta span {
+  background: rgba(255,255,255,0.05);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+/* Card detail panel */
+.dev-detail {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100vh;
+  background: var(--dev-panel);
+  border-left: 1px solid var(--dev-border);
+  padding: 20px;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.2s ease;
+  z-index: 1000;
+}
+
+.dev-detail.open {
+  transform: translateX(0);
+}
+
+.dev-detail-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--dev-text);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.dev-detail h2 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+}
+
+.dev-detail-field {
+  margin-bottom: 10px;
+}
+
+.dev-detail-field label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--dev-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.dev-detail-field p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Export button */
+.dev-export-btn {
+  background: #3344aa;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.dev-export-btn:hover {
+  background: #4455bb;
+}
+
+/* Theme toggle */
+.dev-theme-toggle {
+  background: none;
+  border: 1px solid var(--dev-border);
+  color: var(--dev-text);
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+/* Light theme */
+body.dev-ui.light {
+  --dev-bg: #f0f0f5;
+  --dev-panel: #ffffff;
+  --dev-border: #d0d0e0;
+  --dev-text: #1a1a2e;
+  --dev-muted: #666688;
+}

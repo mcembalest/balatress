@@ -1,0 +1,33 @@
+/* Animated Balatro-style background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(29, 10, 54, 0.8) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(10, 30, 60, 0.7) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(40, 10, 30, 0.6) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 60%, rgba(10, 40, 50, 0.5) 0%, transparent 40%),
+    linear-gradient(135deg, #0a0a1a, #0f0f23, #1a0a20);
+  animation: balatroSwirl 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes balatroSwirl {
+  0%   { filter: hue-rotate(0deg); }
+  25%  { filter: hue-rotate(15deg); }
+  50%  { filter: hue-rotate(-10deg); }
+  75%  { filter: hue-rotate(20deg); }
+  100% { filter: hue-rotate(0deg); }
+}
+
+/* Title glow pulse */
+.hud h1 {
+  animation: titlePulse 3s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+  0%, 100% { text-shadow: 0 0 8px rgba(242, 201, 76, 0.4); }
+  50%      { text-shadow: 0 0 16px rgba(242, 201, 76, 0.7), 0 0 30px rgba(242, 201, 76, 0.2); }
+}
