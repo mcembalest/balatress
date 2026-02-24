@@ -30,6 +30,106 @@
   display: none;
 }
 
+/* Fan card in cards row */
+.fan-card {
+  transition: transform 0.2s ease, z-index 0s;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.fan-card:hover {
+  transform: translateY(-12px) scale(1.08) !important;
+  z-index: 20 !important;
+}
+
+/* Empty card slot placeholder */
+.empty-card-slot {
+  width: 100px;
+  height: 80px;
+  border: 2px dashed var(--bal-panel-border);
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  font-size: 0.5rem;
+  font-family: "Press Start 2P", monospace;
+  opacity: 0.4;
+  flex-shrink: 0;
+}
+
+.empty-card-slot-small {
+  width: 80px;
+  height: 70px;
+}
+
+/* Card preview overlay — centered on screen */
+.card-preview-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  animation: previewFadeIn 0.12s ease-out forwards;
+}
+
+.card-preview-size {
+  width: 280px !important;
+  padding: 18px !important;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7), 0 0 30px rgba(var(--glow-r, 150), var(--glow-g, 150), var(--glow-b, 255), 0.4);
+}
+
+.card-preview-size .card-name {
+  font-size: 0.8rem !important;
+  margin-bottom: 10px !important;
+}
+
+.card-preview-size .card-description {
+  -webkit-line-clamp: unset !important;
+  display: block !important;
+  overflow: visible !important;
+  font-size: 0.85rem !important;
+  margin-bottom: 10px !important;
+}
+
+.card-preview-size .card-flavor {
+  display: block !important;
+  font-size: 0.7rem !important;
+  margin-bottom: 10px !important;
+}
+
+.card-preview-size .card-category {
+  font-size: 0.6rem !important;
+}
+
+.card-preview-size .card-rarity {
+  font-size: 0.55rem !important;
+}
+
+.card-preview-size .card-piece {
+  font-size: 0.6rem !important;
+}
+
+@keyframes previewFadeIn {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Joker activation wobble */
+@keyframes jokerActivate {
+  0%   { transform: rotate(0deg) scale(1); }
+  20%  { transform: rotate(-4deg) scale(1.05); }
+  40%  { transform: rotate(3deg) scale(1.08); }
+  60%  { transform: rotate(-2deg) scale(1.05); }
+  80%  { transform: rotate(1deg) scale(1.02); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+.joker-activating {
+  animation: jokerActivate 0.4s ease-in-out;
+}
+
 /* Rarity border glow */
 .card-common { border-color: var(--rarity-common); --glow-r: 154; --glow-g: 164; --glow-b: 175; }
 .card-uncommon { border-color: var(--rarity-uncommon); --glow-r: 0; --glow-g: 156; --glow-b: 253; }

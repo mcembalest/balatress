@@ -17,5 +17,5 @@ export function updateHud(state: GameState, els: {
   els.roundInfo.textContent = `Round ${state.round + 1} | ${state.aiDifficulty} (depth ${state.aiDepth}) | ${state.boardW}x${state.boardH} | Turns left: ${Math.max(0, state.turnLimit - state.turn + 1)}${bossText}`;
 
   els.goldDisplay.textContent = `${state.gold}g`;
-  els.scoreDisplay.innerHTML = `<span class="chips-value">${state.totalChips}</span> chips <span class="mult-sign">x</span> <span class="mult-value">${state.totalMult}</span> mult = <span class="score-value">${state.roundScore}</span>`;
+  els.scoreDisplay.innerHTML = `<span class="chips-pill"><span class="chips-value">${state.totalChips}</span><span class="chips-label">chips</span></span><span class="mult-sign">x</span><span class="mult-pill"><span class="mult-value">${state.totalMult}</span><span class="mult-label">mult</span></span><span class="score-eq">=</span><span class="score-pill"><span class="score-value">${state.roundScore}</span><span class="score-label">score</span></span>`;
 }

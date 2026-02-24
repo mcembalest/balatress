@@ -10,7 +10,7 @@ import { setupRound, resetRun, onPlayerMove, useTarot, setFlowCallbacks } from "
 import { renderBoard } from "./ui/render.js";
 import { updateHud } from "./ui/hud.js";
 import { showShop, showRestart, hideOverlay } from "./ui/overlay.js";
-import { renderTarotHand, renderOwnedJokers } from "./ui/cards-ui.js";
+import { renderCardsRow, animateJokerActivation } from "./ui/cards-ui.js";
 import { initCRT, screenShake, particleBurst, squareCenter } from "./ui/effects.js";
 import { scorePopup, bossIntroSplash, pieceEntranceAnimation } from "./ui/animations.js";
 import { playCapture, playCheck, playCheckmate } from "./ui/audio.js";
@@ -38,8 +38,7 @@ const overlayEl = requireElement<HTMLElement>("overlay");
 const overlayTitleEl = requireElement<HTMLElement>("overlayTitle");
 const overlayBodyEl = requireElement<HTMLElement>("overlayBody");
 const choicesEl = requireElement<HTMLElement>("choices");
-const tarotHandEl = requireElement<HTMLElement>("tarotHand");
-const jokersEl = requireElement<HTMLElement>("jokersList");
+const cardsRowEl = requireElement<HTMLElement>("cardsRow");
 const boardElement = requireElement<HTMLElement>("board");
 
 // ── Game state ──
@@ -81,10 +80,9 @@ function render(): void {
     goldDisplay: goldDisplayEl,
     scoreDisplay: scoreDisplayEl,
   });
-  renderTarotHand(tarotHandEl, state.ownedTarots, state.maxTarots, (index) => {
+  renderCardsRow(cardsRowEl, state.ownedJokers, state.ownedTarots, state.maxTarots, (index) => {
     useTarot(state, index);
   });
-  renderOwnedJokers(jokersEl, state.ownedJokers);
 }
 
 const overlayEls = {
@@ -132,6 +130,10 @@ setFlowCallbacks({
   onScoreEvent: (chips, source, key) => {
     if (key) {
       scorePopup(source, key, boardElement, "#4fc3f7");
+    }
+    // Animate jokers when scoring occurs
+    if (state.ownedJokers.length > 0) {
+      animateJokerActivation();
     }
   },
 });
